@@ -4,13 +4,22 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+
 import android.widget.TextView;
+
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+
+import java.util.ArrayList;
 
 public class ResultActivity extends ActionBarActivity {
 
     public int[] left;
     public int[] right;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +30,37 @@ public class ResultActivity extends ActionBarActivity {
         right = getIntent().getBundleExtra("bundle").getIntArray("right");
 
         calculateHearLoss();
+
+
+        LineChart chart = (LineChart) findViewById(R.id.chart);
+        //tworzenie danych do wykresu
+        ArrayList<Entry> leftEar = new ArrayList<Entry>();
+        ArrayList<Entry> rightEar = new ArrayList<Entry>();
+
+
+        Entry li , pi;
+        for (int i = 0; i < 9; i++) {
+            li = new Entry(left[i], i);
+            leftEar.add(li);
+            pi = new Entry(right[i], i);
+            rightEar.add(pi);
+        }
+
+        LineDataSet setLeft = new LineDataSet(leftEar, "Lewe ucho");
+        LineDataSet setRight = new LineDataSet(rightEar, "Prawe ucho");
+
+        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
+        dataSets.add(setLeft);
+        dataSets.add(setRight);
+
+        ArrayList<String> xVals = new ArrayList<String>();
+
+        for ( int i=0; i<9; i++) {xVals.add(String.valueOf(ExaminationActivity.FREQUENCY[i]));}
+
+        LineData data = new LineData(xVals, dataSets);
+        chart.setData(data);
+        chart.invalidate(); // refresh
+
     }
 
 

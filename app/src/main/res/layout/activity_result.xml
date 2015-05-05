@@ -4,6 +4,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:id="@+id/activity_result"
     tools:context="pl.edu.wat.audiogram.ResultActivity">
 
     <TextView
@@ -14,5 +15,9 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         />
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </RelativeLayout>
