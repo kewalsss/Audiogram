@@ -1,5 +1,6 @@
 package pl.edu.wat.audiogram;
 
+import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,6 +9,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -49,6 +52,13 @@ public class ResultActivity extends ActionBarActivity {
         LineDataSet setLeft = new LineDataSet(leftEar, "Lewe ucho");
         LineDataSet setRight = new LineDataSet(rightEar, "Prawe ucho");
 
+        //kolory linii na wykresie
+        setLeft.setColor(Color.GREEN);
+        setRight.setColor(Color.RED);
+        setLeft.setCircleColor(Color.GREEN);
+        setRight.setCircleColor(Color.RED);
+
+
         ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
         dataSets.add(setLeft);
         dataSets.add(setRight);
@@ -59,6 +69,19 @@ public class ResultActivity extends ActionBarActivity {
 
         LineData data = new LineData(xVals, dataSets);
         chart.setData(data);
+        chart.setTouchEnabled(true);
+        //wszystkie wartości zmieszczą się na ekranie
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setLabelsToSkip(0);
+
+        YAxis leftAxis = chart.getAxisLeft();
+        leftAxis.setAxisMaxValue(100);
+        leftAxis.setAxisMinValue(-10);
+        leftAxis.setStartAtZero(false);
+        leftAxis.setInverted(true);
+
+
+
         chart.invalidate(); // refresh
 
     }
@@ -130,7 +153,7 @@ public class ResultActivity extends ActionBarActivity {
 
         TextView hearLossValue = (TextView) findViewById(R.id.hearLoss);
 
-        hearLossValue.setText(String.format("Ubytek słuchu wynosi:\nlewe ucho - %ddB \nprawe ucho - %ddB \nłącznie - %ddB"  , wynik1, wynik2, wynik));
+        hearLossValue.setText(String.format("Ubytek słuchu wynosi %ddB\nlewe ucho - %ddB, prawe ucho - %ddB"  , wynik, wynik1, wynik2));
 
 
 
