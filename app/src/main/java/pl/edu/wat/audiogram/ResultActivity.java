@@ -28,6 +28,7 @@ public class ResultActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+        setTitle("Wyniki badania");
 
         left = getIntent().getBundleExtra("bundle").getIntArray("left");
         right = getIntent().getBundleExtra("bundle").getIntArray("right");
@@ -42,7 +43,7 @@ public class ResultActivity extends ActionBarActivity {
 
 
         Entry li , pi;
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < ExaminationActivity.FREQUENCY.length; i++) {
             li = new Entry(left[i], i);
             leftEar.add(li);
             pi = new Entry(right[i], i);
@@ -65,20 +66,32 @@ public class ResultActivity extends ActionBarActivity {
 
         ArrayList<String> xVals = new ArrayList<String>();
 
-        for ( int i=0; i<9; i++) {xVals.add(String.valueOf(ExaminationActivity.FREQUENCY[i]));}
+        for ( int i=0; i<ExaminationActivity.FREQUENCY.length; i++) {xVals.add(String.valueOf(ExaminationActivity.FREQUENCY[i]));}
 
         LineData data = new LineData(xVals, dataSets);
         chart.setData(data);
         chart.setTouchEnabled(true);
+        chart.setPinchZoom(true);
+        chart.getAxisRight().setEnabled(false); // nie wyświetla prawej osi współrzędnych
+        chart.setDescription("Ubytek słuchu dla badanych częstotliwości");
+        chart.setMaxVisibleValueCount(0);
+
         //wszystkie wartości zmieszczą się na ekranie
         XAxis xAxis = chart.getXAxis();
         xAxis.setLabelsToSkip(0);
+        xAxis.setDrawGridLines(false);
+
 
         YAxis leftAxis = chart.getAxisLeft();
+
+
+        leftAxis.setLabelCount(ExaminationActivity.AMPLITUDE.length);
         leftAxis.setAxisMaxValue(100);
         leftAxis.setAxisMinValue(-10);
         leftAxis.setStartAtZero(false);
         leftAxis.setInverted(true);
+
+
 
 
 
@@ -153,7 +166,7 @@ public class ResultActivity extends ActionBarActivity {
 
         TextView hearLossValue = (TextView) findViewById(R.id.hearLoss);
 
-        hearLossValue.setText(String.format("Ubytek słuchu wynosi %ddB\nlewe ucho - %ddB, prawe ucho - %ddB"  , wynik, wynik1, wynik2));
+        hearLossValue.setText(String.format("Ubytek słuchu wynosi %ddB\nlewe ucho: %ddB, prawe ucho: %ddB"  , wynik, wynik1, wynik2));
 
 
 
