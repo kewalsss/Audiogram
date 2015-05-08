@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import static android.media.AudioFormat.*;
 
-public class ExaminationActivity extends Activity implements AudioTrackListener {
+public class ExaminationActivity extends Activity  {
 
     private static final int DURATION = 5;
     public static final int[] FREQUENCY = new int[]{125, 500, 1000, 2000, 3000, 4000, 6000, 8000, 10000};
@@ -28,7 +28,7 @@ public class ExaminationActivity extends Activity implements AudioTrackListener 
     private int mFrequencyStep = 0;
 
     private boolean rightEar = false;
-    private AudioTrackListener audioTrackListener;
+    //private AudioTrackListener audioTrackListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class ExaminationActivity extends Activity implements AudioTrackListener 
 
         textExamination = (TextView) findViewById(R.id.textView4);
 
-        toneGenerator = new ToneGenerator(audioTrackListener);
+        toneGenerator = new ToneGenerator();
         playTone();
 
     }
@@ -155,11 +155,6 @@ public class ExaminationActivity extends Activity implements AudioTrackListener 
     protected void onDestroy() {
         super.onDestroy();
         toneGenerator.stop();
-    }
-
-    @Override
-    public void onFinishPlay() {
-        nextStep(false);
     }
 
     public void onLouderClick(View view) {

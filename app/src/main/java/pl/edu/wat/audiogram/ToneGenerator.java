@@ -13,15 +13,7 @@ class ToneGenerator  {
 
 
     private AudioTrack audioTrack;
-    private AudioTrackListener audioTrackListener;
-    //konstruktor
-    public ToneGenerator() {
-    }
-
-    public ToneGenerator(AudioTrackListener audioTrackListener) {
-        this.audioTrackListener = audioTrackListener;
-
-    }
+   
 
     //odtwarzanie tonów
     public void playCalibration() {
@@ -45,18 +37,7 @@ class ToneGenerator  {
             audioTrack.setLoopPoints(0, sample.length, -1);
         }
 
-        if (audioTrackListener != null && !loop) {
-            audioTrack.setNotificationMarkerPosition(sample.length);
-            audioTrack.setPlaybackPositionUpdateListener(new AudioTrack.OnPlaybackPositionUpdateListener() {
-                @Override
-                public void onPeriodicNotification(AudioTrack track) {
-                }
-                @Override
-                public void onMarkerReached(AudioTrack track) {
-                audioTrackListener.onFinishPlay();
-                }
-            });
-        }
+
 
         audioTrack.play();
 

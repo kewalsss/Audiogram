@@ -92,9 +92,6 @@ public class ResultActivity extends ActionBarActivity {
         leftAxis.setInverted(true);
 
 
-
-
-
         chart.invalidate(); // refresh
 
     }
